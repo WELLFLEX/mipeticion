@@ -1,63 +1,53 @@
-/**
- * Tipos del directorio de entidades públicas.
- *
- * Hoy el MVP tiene una sola entidad (la DIAN), pero la meta es que MiPeticion
- * sirva para presentar PQRSD a cualquier entidad pública de Colombia. Este tipo
- * modela lo que es ESPECÍFICO de cada entidad; lo transversal (términos de la
- * Ley 1755, cálculo de días hábiles, capa LLM, PDF, tutela) permanece genérico.
- */
-import type { CategoriaInfo, PetitionTipo } from "@/lib/legal/constants";
-
-/** Nivel de gobierno de la entidad (útil para enrutamiento futuro). */
-export type NivelGobierno =
-  | "nacional"
-  | "departamental"
-  | "distrital"
-  | "municipal"
-  | "otro";
-
-/** Un paso de la guía de radicación propia de la entidad. */
-export interface PasoRadicacion {
-  titulo: string;
-  texto: string;
-}
-
-/** Canal oficial de PQRSD de la entidad. */
-export interface CanalPqrs {
-  /** URL oficial del canal de PQRSD. */
-  url: string;
-  /** Nombre del canal, para mostrar. Ej.: "Sistema de PQSRD de la DIAN". */
-  canal: string;
-  /** Dominio oficial para que la persona verifique dónde está radicando. */
-  dominioOficial?: string;
-  /** Pasos para radicar en esta entidad. */
-  pasos: PasoRadicacion[];
-}
-
-export interface Entidad {
-  /** Identificador estable en minúsculas (se usará en la columna `entity` y en rutas). */
-  slug: string;
-  /** Nombre completo oficial. */
-  nombre: string;
-  /** Sigla o nombre corto. */
-  nombreCorto: string;
-  /** Ámbito de competencia, en lenguaje sencillo. */
-  competencia: string;
-  nivel: NivelGobierno;
-  /** Sector temático para enrutamiento futuro: 'tributario', 'salud', 'servicios-publicos'… */
-  sector?: string;
-  /** Si está disponible en el producto. `false` = próximamente. */
-  activa: boolean;
-  /** Canal y guía de radicación. */
-  pqrs: CanalPqrs;
-  /** Tipos de solicitud que admite la entidad. */
-  tiposDisponibles: PetitionTipo[];
-  /** Categorías de problema propias de la entidad (para el intake). */
-  categorias: CategoriaInfo[];
-  /**
-   * Excepciones de término en días hábiles por tipo. Vacío = usa los términos
-   * generales de la Ley 1755 de 2015. Se reserva para reglas especiales de
-   * ciertas entidades; el núcleo del cálculo sigue siendo compartido.
-   */
-  terminoOverrides?: Partial<Record<PetitionTipo, number>>;
-}
+import { z } from 'zod';
+const officialUrl = z
+  .url()
+  .refine((value) => new URL(value).protocol === 'https:', 'El canal debe usar HTTPS.');
+export const rutaIdSchema = z.enum(['informacion', 'estado', 'atencion']);
+export type RutaId = z.infer<typeof rutaIdSchema>;
+export const fuenteSchema = z.object({
+  id: z.string(),
+  titulo: z.string(),
+  url: officialUrl,
+  verificadoEl: z.iso.date(),
+  metodo: z.literal('revision-documental'),
+  alcance: z.string(),
+});
+export const rutaSchema = z.object({
+  id: rutaIdSchema,
+  titulo: z.string(),
+  tipo: z.enum(['peticion_informacion', 'peticion_interes_particular', 'queja']),
+  diasHabiles: z.number().int().positive(),
+  orientacion: z.string(),
+  requisitos: z.array(z.string()).min(1),
+  reglaId: z.literal('ley1755-art14-v1'),
+  fuenteId: z.string(),
+});
+export const entidadSchema = z.object({
+  slug: z.string().regex(/^[a-z-]+$/),
+  nombre: z.string(),
+  nombreCorto: z.string(),
+  descripcion: z.string(),
+  competencia: z.string(),
+  nivel: z.literal('nacional'),
+  sector: z.string(),
+  aliases: z.array(z.string()),
+  codigoSigep: z.string().nullable(),
+  activa: z.boolean(),
+  fuentes: z.array(fuenteSchema).min(1),
+  canales: z
+    .array(
+      z.object({
+        tipo: z.enum(['web', 'orientacion']),
+        nombre: z.string(),
+        url: officialUrl,
+        fuenteId: z.string(),
+      }),
+    )
+    .min(1),
+  tramiteDirecto: z.object({ titulo: z.string(), descripcion: z.string(), url: officialUrl }),
+  ejemplo: z.string(),
+  rutas: z.array(rutaSchema).length(3),
+});
+export type Entidad = z.infer<typeof entidadSchema>;
+export type Ruta = z.infer<typeof rutaSchema>;
+export type Fuente = z.infer<typeof fuenteSchema>;

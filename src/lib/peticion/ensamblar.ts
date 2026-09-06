@@ -1,105 +1,41 @@
-/**
- * Ensambla el documento final del derecho de petición a partir del contenido
- * generado por la IA y de los datos del intake.
- *
- * Aquí viven los campos AUTORITATIVOS que NO dependen del modelo:
- *  - `tipo` (elegido por el usuario / categoría)
- *  - identificación del peticionario y firma (copiados del intake)
- *  - entidad destinataria (por defecto la DIAN; ver directorio de entidades)
- *  - la frase del término legal (construida con el número que fija el código)
- *  - un fundamento canónico (Art. 23 C.P. + Ley 1755 de 2015) siempre presente
- */
-import { entidadPorDefecto, terminoParaEntidad, type Entidad } from '@/lib/entidades';
-import { DocType, PetitionTipo, docTypeLabel } from '@/lib/legal/constants';
-import type {
-  GeneratedContent,
-  IntakeInput,
-  PeticionDocument,
+import { getEntidad, getRuta } from '@/lib/entidades';
+import { docTypeLabel, type DocType } from '@/lib/legal/constants';
+import { FUNDAMENTOS, fraseTermino } from '@/lib/legal/rules';
+import {
+  peticionDocumentSchema,
+  type GeneratedContent,
+  type IntakeInput,
+  type PeticionDocument,
 } from '@/lib/schema/peticion';
-
-function fundamentoCanonico(nombreCortoEntidad: string): string {
-  return (
-    `El artículo 23 de la Constitución Política consagra el derecho fundamental de petición. ` +
-    `La Ley 1755 de 2015 regula su ejercicio y fija los términos de respuesta a cargo de las ` +
-    `autoridades, entre ellas la ${nombreCortoEntidad}.`
-  );
-}
-
-export function fraseTermino(dias: number): string {
-  return (
-    `Solicito que se resuelva de fondo esta petición y se me notifique la respuesta ` +
-    `dentro del término legal de ${dias} días hábiles, contados a partir del día siguiente ` +
-    `a su radicación, de conformidad con la Ley 1755 de 2015. En caso de no recibir ` +
-    `respuesta oportuna, de fondo y congruente, acudiré a la acción de tutela para la ` +
-    `protección de mi derecho fundamental de petición (art. 23 C.P.; Decreto 2591 de 1991).`
-  );
-}
-
-export function firmaDocumento(docType: DocType, docNumber: string): string {
-  return `${docTypeLabel(docType)} No. ${docNumber}`;
-}
-
-/** Garantiza que el fundamento canónico esté presente (una sola vez). */
-function conFundamentoCanonico(fundamentos: string[], nombreCortoEntidad: string): string[] {
-  const yaCita = fundamentos.some((f) => /1755/.test(f) && /petici/i.test(f));
-  return yaCita ? fundamentos : [fundamentoCanonico(nombreCortoEntidad), ...fundamentos];
-}
-
-export interface EnsamblarParams {
-  input: IntakeInput;
-  tipo: PetitionTipo;
-  content: GeneratedContent;
-  ciudadFecha: string;
-  /** Entidad destinataria. Por defecto, la entidad por defecto del MVP (DIAN). */
-  entidad?: Entidad;
-}
-
+export { fraseTermino };
+export const firmaDocumento = (type: DocType, number: string) =>
+  `${docTypeLabel(type)} No. ${number}`;
 export function ensamblarPeticion({
   input,
-  tipo,
   content,
   ciudadFecha,
-  entidad = entidadPorDefecto(),
-}: EnsamblarParams): PeticionDocument {
-  const { peticionario } = input;
-  const dias = terminoParaEntidad(entidad, tipo);
-
-  return {
-    tipo,
+}: {
+  input: IntakeInput;
+  content: GeneratedContent;
+  ciudadFecha: string;
+}): PeticionDocument {
+  const entity = getEntidad(input.entitySlug);
+  if (!entity) throw new Error('Entidad no disponible');
+  const route = getRuta(entity, input.pathway);
+  const p = input.peticionario;
+  return peticionDocumentSchema.parse({
+    tipo: route.tipo,
     ciudadFecha,
-    destinatario: {
-      entidad: entidad.nombre,
-      dependencia: content.dependenciaSugerida ?? '',
-      ciudad: peticionario.ciudad,
-    },
+    destinatario: { entidad: entity.nombre, dependencia: '', ciudad: '' },
     asunto: content.asunto,
-    peticionario: {
-      nombre: peticionario.nombre,
-      docType: peticionario.docType,
-      docNumber: peticionario.docNumber,
-      direccionNotificacion: peticionario.direccionNotificacion ?? '',
-      correo: peticionario.correo,
-      ciudad: peticionario.ciudad,
-    },
-    saludo: content.saludo || 'Respetados señores:',
-    cuerpoIntro: content.cuerpoIntro ?? '',
+    peticionario: p,
+    saludo: 'Respetados señores:',
+    cuerpoIntro: 'Me dirijo respetuosamente a ustedes para presentar la siguiente solicitud.',
     hechos: content.hechos,
-    fundamentos: conFundamentoCanonico(content.fundamentos, entidad.nombreCorto),
+    fundamentos: FUNDAMENTOS,
     peticiones: content.peticiones,
-    solicitudRespuestaTermino: fraseTermino(dias),
-    notificacion: {
-      direccion: peticionario.direccionNotificacion ?? '',
-      correo: peticionario.correo,
-    },
-    firma: {
-      nombre: peticionario.nombre,
-      documento: firmaDocumento(peticionario.docType, peticionario.docNumber),
-    },
-  };
-}
-
-/** Resuelve el tipo definitivo: preferencia del usuario, luego categoría, luego default. */
-export function resolverTipo(input: IntakeInput): PetitionTipo {
-  if (input.tipoSugerido) return input.tipoSugerido;
-  return 'peticion_interes_particular';
+    solicitudRespuestaTermino: fraseTermino(route.diasHabiles),
+    notificacion: { direccion: p.direccionNotificacion, correo: p.correo },
+    firma: { nombre: p.nombre, documento: firmaDocumento(p.docType, p.docNumber) },
+  });
 }

@@ -1,83 +1,74 @@
-import { NextResponse } from 'next/server';
-import { terminoDias, tipoLabel } from '@/lib/legal/constants';
-import { formatFechaLarga, hoyEnColombia } from '@/lib/legal/date-utils';
-import { getLLMProvider } from '@/lib/llm';
-import { ensamblarPeticion, resolverTipo } from '@/lib/peticion/ensamblar';
-import { rateLimit } from '@/lib/rate-limit';
-import {
-  generatedContentSchema,
-  intakeInputSchema,
-  peticionDocumentSchema,
-} from '@/lib/schema/peticion';
-
+import { CATALOGO, getEntidad, getRuta } from '@/lib/entidades';
+import { LEGAL_VERSION } from '@/lib/legal/rules';
+import { analizarRelato } from '@/lib/intake/analyze';
+import { AnthropicProvider, TemplateProvider } from '@/lib/llm';
+import { draftInputSchema, generatedContentSchema } from '@/lib/schema/peticion';
+import { requestLimit } from '@/lib/rate-limit';
+import { readJson, json, fail, HttpError } from '@/lib/server/http';
+import { metric } from '@/lib/server/metrics';
+import { finishAi, reserveAi } from '@/lib/server/ai';
 export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-
-function clientKey(req: Request): string {
-  const fwd = req.headers.get('x-forwarded-for');
-  return fwd?.split(',')[0]?.trim() || 'local';
-}
-
+export const maxDuration = 40;
 export async function POST(req: Request) {
-  const rl = rateLimit(`generate:${clientKey(req)}`);
-  if (!rl.ok) {
-    return NextResponse.json(
-      { error: 'Demasiadas solicitudes. Intenta de nuevo en un momento.' },
-      { status: 429, headers: { 'Retry-After': String(Math.ceil(rl.retryAfterMs / 1000)) } },
-    );
-  }
-
-  let body: unknown;
   try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: 'Cuerpo de la solicitud inválido.' }, { status: 400 });
-  }
-
-  const parsed = intakeInputSchema.safeParse(body);
-  if (!parsed.success) {
-    return NextResponse.json(
-      {
-        error: 'Datos inválidos.',
-        detalles: parsed.error.issues.map((i) => ({
-          campo: i.path.join('.'),
-          mensaje: i.message,
-        })),
+    const input = draftInputSchema.safeParse(await readJson(req));
+    if (!input.success)
+      throw new HttpError(400, 'Revisa el relato, la entidad y las autorizaciones.');
+    const data = input.data;
+    const entity = getEntidad(data.entitySlug);
+    if (!entity?.activa) throw new HttpError(400, 'Entidad no disponible.');
+    const analysis = analizarRelato(data);
+    if (analysis.status === 'referral') throw new HttpError(422, analysis.referral!.description);
+    if (!(await requestLimit(req, 'draft', 12)))
+      throw new HttpError(429, 'Alcanzaste el límite temporal. Intenta de nuevo en un minuto.');
+    const route = getRuta(entity, data.pathway);
+    let provider = 'plantilla';
+    let fallbackReason: string | undefined;
+    let content = await new TemplateProvider().generarContenido({ input: data, entity });
+    if (data.mode === 'ai') {
+      const reservation = await reserveAi();
+      if (!reservation)
+        fallbackReason =
+          'La IA no está disponible o alcanzó su presupuesto. Preparamos una plantilla sin IA que puedes editar.';
+      else {
+        const ai = new AnthropicProvider(reservation.config.key, reservation.config.model);
+        const start = performance.now();
+        let ok = false;
+        try {
+          content = await ai.generarContenido({ input: data, entity });
+          provider = 'anthropic';
+          ok = true;
+        } catch {
+          fallbackReason =
+            'La IA no pudo terminar. Conservamos tus palabras en una plantilla editable.';
+        } finally {
+          await finishAi(
+            reservation,
+            ai.usage.inputTokens ? ai.usage : null,
+            ok,
+            performance.now() - start,
+          );
+        }
+      }
+    }
+    await metric(
+      provider === 'anthropic' ? 'draft_ai' : fallbackReason ? 'draft_fallback' : 'draft_template',
+    );
+    return json({
+      content: generatedContentSchema.parse(content),
+      meta: {
+        tipo: route.tipo,
+        tipoLabel: route.titulo,
+        terminoDias: route.diasHabiles,
+        proveedor: provider,
+        entitySlug: entity.slug,
+        pathway: route.id,
+        catalogVersion: CATALOGO.version,
+        ruleVersion: LEGAL_VERSION,
+        fallbackReason,
       },
-      { status: 400 },
-    );
+    });
+  } catch (e) {
+    return fail(e);
   }
-
-  const input = parsed.data;
-  const tipo = resolverTipo(input);
-  const dias = terminoDias(tipo);
-  const ciudadFecha = `${input.peticionario.ciudad}, ${formatFechaLarga(hoyEnColombia())}`;
-
-  const provider = getLLMProvider();
-  let content;
-  try {
-    content = generatedContentSchema.parse(
-      await provider.generarContenido({ input, tipo, terminoDias: dias }),
-    );
-  } catch (err) {
-    console.error('[generate] fallo del proveedor', err);
-    return NextResponse.json(
-      { error: 'No se pudo generar la petición. Intenta de nuevo.' },
-      { status: 502 },
-    );
-  }
-
-  const documento = peticionDocumentSchema.parse(
-    ensamblarPeticion({ input, tipo, content, ciudadFecha }),
-  );
-
-  return NextResponse.json({
-    documento,
-    meta: {
-      tipo,
-      tipoLabel: tipoLabel(tipo),
-      terminoDias: dias,
-      proveedor: provider.nombre,
-    },
-  });
 }

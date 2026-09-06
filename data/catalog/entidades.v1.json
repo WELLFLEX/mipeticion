@@ -1,0 +1,436 @@
+{
+  "version": "1.0.0",
+  "publicadoEl": "2026-09-06",
+  "licencia": "CC-BY-SA-4.0",
+  "entidades": [
+    {
+      "slug": "dian",
+      "nombreCorto": "DIAN",
+      "nombre": "Dirección de Impuestos y Aduanas Nacionales",
+      "descripcion": "Impuestos y trámites tributarios",
+      "competencia": "Impuestos y trámites tributarios",
+      "nivel": "nacional",
+      "sector": "tributario",
+      "aliases": [
+        "dian",
+        "rut",
+        "tributario",
+        "aduanas",
+        "facturacion electronica",
+        "declaracion de renta"
+      ],
+      "codigoSigep": "0870",
+      "activa": true,
+      "fuentes": [
+        {
+          "id": "dian-pqrs",
+          "titulo": "Portal de peticiones DIAN",
+          "url": "https://www.dian.gov.co/atencionciudadano/PQSRD/Paginas/PQSR.aspx",
+          "verificadoEl": "2026-09-06",
+          "metodo": "revision-documental",
+          "alcance": "Instrucciones públicas; no se realizó una radicación de prueba."
+        }
+      ],
+      "canales": [
+        {
+          "tipo": "web",
+          "nombre": "Ver canal oficial de DIAN",
+          "url": "https://www.dian.gov.co/atencionciudadano/PQSRD/Paginas/PQSR.aspx",
+          "fuenteId": "dian-pqrs"
+        },
+        {
+          "tipo": "orientacion",
+          "nombre": "Consultar puntos de atención y alternativas",
+          "url": "https://www.dian.gov.co/",
+          "fuenteId": "dian-pqrs"
+        }
+      ],
+      "tramiteDirecto": {
+        "titulo": "¿Puedes resolverlo en el portal de la entidad?",
+        "descripcion": "Consulta primero los servicios de RUT, declaraciones y facturación en el portal DIAN. Los recursos y acuerdos de pago tienen procedimientos propios.",
+        "url": "https://www.dian.gov.co/"
+      },
+      "ejemplo": "Tengo una solicitud en la DIAN y no sé en qué va.",
+      "rutas": [
+        {
+          "id": "informacion",
+          "titulo": "Pedir información o copias",
+          "tipo": "peticion_informacion",
+          "diasHabiles": 10,
+          "orientacion": "Indica qué información o documento necesitas y el período al que corresponde.",
+          "requisitos": [
+            "Nombre del documento o información",
+            "Período o referencia, si la conoces"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "dian-pqrs"
+        },
+        {
+          "id": "estado",
+          "titulo": "Conocer el estado de un trámite",
+          "tipo": "peticion_interes_particular",
+          "diasHabiles": 15,
+          "orientacion": "Describe el trámite que ya iniciaste, cuándo lo presentaste y qué información necesitas.",
+          "requisitos": [
+            "Nombre del trámite ya iniciado",
+            "Fecha y radicado anterior, si los tienes"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "dian-pqrs"
+        },
+        {
+          "id": "atencion",
+          "titulo": "Reportar un problema de atención",
+          "tipo": "queja",
+          "diasHabiles": 15,
+          "orientacion": "Cuenta qué ocurrió durante la atención y qué respuesta o mejora solicitas.",
+          "requisitos": [
+            "Fecha aproximada y canal de atención",
+            "Descripción concreta de lo ocurrido"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "dian-pqrs"
+        }
+      ]
+    },
+    {
+      "slug": "colpensiones",
+      "nombreCorto": "Colpensiones",
+      "nombre": "Administradora Colombiana de Pensiones — Colpensiones",
+      "descripcion": "Información sobre tus trámites de pensión",
+      "competencia": "Información sobre tus trámites de pensión",
+      "nivel": "nacional",
+      "sector": "pensiones",
+      "aliases": ["colpensiones", "historia laboral", "pension", "semanas cotizadas"],
+      "codigoSigep": "8000",
+      "activa": true,
+      "fuentes": [
+        {
+          "id": "colpensiones-pqrs",
+          "titulo": "Peticiones, quejas y reclamos",
+          "url": "https://www.colpensiones.gov.co/publicaciones/3034/peticiones-quejas-o-reclamos/",
+          "verificadoEl": "2026-09-06",
+          "metodo": "revision-documental",
+          "alcance": "Instrucciones públicas; no se realizó una radicación de prueba."
+        }
+      ],
+      "canales": [
+        {
+          "tipo": "web",
+          "nombre": "Ver canal oficial de Colpensiones",
+          "url": "https://www.colpensiones.gov.co/publicaciones/3034/peticiones-quejas-o-reclamos/",
+          "fuenteId": "colpensiones-pqrs"
+        },
+        {
+          "tipo": "orientacion",
+          "nombre": "Consultar puntos de atención y alternativas",
+          "url": "https://www.colpensiones.gov.co/",
+          "fuenteId": "colpensiones-pqrs"
+        }
+      ],
+      "tramiteDirecto": {
+        "titulo": "¿Puedes resolverlo en el portal de la entidad?",
+        "descripcion": "Consulta tu historia laboral y el estado de tus solicitudes en los servicios de Colpensiones. El reconocimiento de pensión tiene un trámite especializado.",
+        "url": "https://www.colpensiones.gov.co/"
+      },
+      "ejemplo": "Necesito una copia de mi historia laboral de Colpensiones.",
+      "rutas": [
+        {
+          "id": "informacion",
+          "titulo": "Pedir información o copias",
+          "tipo": "peticion_informacion",
+          "diasHabiles": 10,
+          "orientacion": "Indica qué información o documento necesitas y el período al que corresponde.",
+          "requisitos": [
+            "Nombre del documento o información",
+            "Período o referencia, si la conoces"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "colpensiones-pqrs"
+        },
+        {
+          "id": "estado",
+          "titulo": "Conocer el estado de un trámite",
+          "tipo": "peticion_interes_particular",
+          "diasHabiles": 15,
+          "orientacion": "Describe el trámite que ya iniciaste, cuándo lo presentaste y qué información necesitas.",
+          "requisitos": [
+            "Nombre del trámite ya iniciado",
+            "Fecha y radicado anterior, si los tienes"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "colpensiones-pqrs"
+        },
+        {
+          "id": "atencion",
+          "titulo": "Reportar un problema de atención",
+          "tipo": "queja",
+          "diasHabiles": 15,
+          "orientacion": "Cuenta qué ocurrió durante la atención y qué respuesta o mejora solicitas.",
+          "requisitos": [
+            "Fecha aproximada y canal de atención",
+            "Descripción concreta de lo ocurrido"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "colpensiones-pqrs"
+        }
+      ]
+    },
+    {
+      "slug": "prosperidad-social",
+      "nombreCorto": "Prosperidad Social",
+      "nombre": "Departamento Administrativo para la Prosperidad Social",
+      "descripcion": "Información sobre programas y solicitudes sociales",
+      "competencia": "Información sobre programas y solicitudes sociales",
+      "nivel": "nacional",
+      "sector": "programas-sociales",
+      "aliases": [
+        "prosperidad social",
+        "renta ciudadana",
+        "colombia mayor",
+        "devolucion del iva",
+        "renta joven",
+        "dps"
+      ],
+      "codigoSigep": "8030",
+      "activa": true,
+      "fuentes": [
+        {
+          "id": "prosperidad-social-pqrs",
+          "titulo": "Participación y servicio al ciudadano",
+          "url": "https://prosperidadsocial.gov.co/atencion-al-ciudadano/",
+          "verificadoEl": "2026-09-06",
+          "metodo": "revision-documental",
+          "alcance": "Instrucciones públicas; no se realizó una radicación de prueba."
+        }
+      ],
+      "canales": [
+        {
+          "tipo": "web",
+          "nombre": "Ver canal oficial de Prosperidad Social",
+          "url": "https://prosperidadsocial.gov.co/atencion-al-ciudadano/",
+          "fuenteId": "prosperidad-social-pqrs"
+        },
+        {
+          "tipo": "orientacion",
+          "nombre": "Consultar puntos de atención y alternativas",
+          "url": "https://prosperidadsocial.gov.co/",
+          "fuenteId": "prosperidad-social-pqrs"
+        }
+      ],
+      "tramiteDirecto": {
+        "titulo": "¿Puedes resolverlo en el portal de la entidad?",
+        "descripcion": "Consulta la información del programa en Prosperidad Social. Una petición no reemplaza la inscripción ni garantiza acceder a un beneficio.",
+        "url": "https://prosperidadsocial.gov.co/"
+      },
+      "ejemplo": "Presenté una solicitud en Prosperidad Social y quiero conocer su estado.",
+      "rutas": [
+        {
+          "id": "informacion",
+          "titulo": "Pedir información o copias",
+          "tipo": "peticion_informacion",
+          "diasHabiles": 10,
+          "orientacion": "Indica qué información o documento necesitas y el período al que corresponde.",
+          "requisitos": [
+            "Nombre del documento o información",
+            "Período o referencia, si la conoces"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "prosperidad-social-pqrs"
+        },
+        {
+          "id": "estado",
+          "titulo": "Conocer el estado de un trámite",
+          "tipo": "peticion_interes_particular",
+          "diasHabiles": 15,
+          "orientacion": "Describe el trámite que ya iniciaste, cuándo lo presentaste y qué información necesitas.",
+          "requisitos": [
+            "Nombre del trámite ya iniciado",
+            "Fecha y radicado anterior, si los tienes"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "prosperidad-social-pqrs"
+        },
+        {
+          "id": "atencion",
+          "titulo": "Reportar un problema de atención",
+          "tipo": "queja",
+          "diasHabiles": 15,
+          "orientacion": "Cuenta qué ocurrió durante la atención y qué respuesta o mejora solicitas.",
+          "requisitos": [
+            "Fecha aproximada y canal de atención",
+            "Descripción concreta de lo ocurrido"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "prosperidad-social-pqrs"
+        }
+      ]
+    },
+    {
+      "slug": "icetex",
+      "nombreCorto": "ICETEX",
+      "nombre": "Instituto Colombiano de Crédito Educativo y Estudios Técnicos en el Exterior — ICETEX",
+      "descripcion": "Información sobre crédito educativo",
+      "competencia": "Información sobre crédito educativo",
+      "nivel": "nacional",
+      "sector": "educacion",
+      "aliases": ["icetex", "credito educativo"],
+      "codigoSigep": "0669",
+      "activa": true,
+      "fuentes": [
+        {
+          "id": "icetex-pqrs",
+          "titulo": "Canales digitales de ICETEX",
+          "url": "https://web.icetex.gov.co/web/portal/atencion-y-servicios-a-la-ciudadania/canales-de-atencion/canales-digitales",
+          "verificadoEl": "2026-09-06",
+          "metodo": "revision-documental",
+          "alcance": "Instrucciones públicas; no se realizó una radicación de prueba."
+        }
+      ],
+      "canales": [
+        {
+          "tipo": "web",
+          "nombre": "Ver canal oficial de ICETEX",
+          "url": "https://web.icetex.gov.co/web/portal/atencion-y-servicios-a-la-ciudadania/canales-de-atencion/canales-digitales",
+          "fuenteId": "icetex-pqrs"
+        },
+        {
+          "tipo": "orientacion",
+          "nombre": "Consultar puntos de atención y alternativas",
+          "url": "https://web.icetex.gov.co/portal",
+          "fuenteId": "icetex-pqrs"
+        }
+      ],
+      "tramiteDirecto": {
+        "titulo": "¿Puedes resolverlo en el portal de la entidad?",
+        "descripcion": "Revisa tu estado de cuenta y trámites en el portal ICETEX. Las negociaciones de deuda y solicitudes de crédito tienen canales específicos.",
+        "url": "https://web.icetex.gov.co/portal"
+      },
+      "ejemplo": "Quiero pedir a ICETEX una copia del estado de mi cuenta.",
+      "rutas": [
+        {
+          "id": "informacion",
+          "titulo": "Pedir información o copias",
+          "tipo": "peticion_informacion",
+          "diasHabiles": 10,
+          "orientacion": "Indica qué información o documento necesitas y el período al que corresponde.",
+          "requisitos": [
+            "Nombre del documento o información",
+            "Período o referencia, si la conoces"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "icetex-pqrs"
+        },
+        {
+          "id": "estado",
+          "titulo": "Conocer el estado de un trámite",
+          "tipo": "peticion_interes_particular",
+          "diasHabiles": 15,
+          "orientacion": "Describe el trámite que ya iniciaste, cuándo lo presentaste y qué información necesitas.",
+          "requisitos": [
+            "Nombre del trámite ya iniciado",
+            "Fecha y radicado anterior, si los tienes"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "icetex-pqrs"
+        },
+        {
+          "id": "atencion",
+          "titulo": "Reportar un problema de atención",
+          "tipo": "queja",
+          "diasHabiles": 15,
+          "orientacion": "Cuenta qué ocurrió durante la atención y qué respuesta o mejora solicitas.",
+          "requisitos": [
+            "Fecha aproximada y canal de atención",
+            "Descripción concreta de lo ocurrido"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "icetex-pqrs"
+        }
+      ]
+    },
+    {
+      "slug": "sena",
+      "nombreCorto": "SENA",
+      "nombre": "Servicio Nacional de Aprendizaje — SENA",
+      "descripcion": "Formación, certificados y atención al aprendiz",
+      "competencia": "Formación, certificados y atención al aprendiz",
+      "nivel": "nacional",
+      "sector": "formacion",
+      "aliases": ["sena", "sofia plus", "sofiaplus", "certificado de aprendiz"],
+      "codigoSigep": "0347",
+      "activa": true,
+      "fuentes": [
+        {
+          "id": "sena-pqrs",
+          "titulo": "Guía oficial del portal PQRSD",
+          "url": "https://www.sena.edu.co/es-co/ciudadano/PreguntasFrecuentes/Portal%20PQRSD.pdf",
+          "verificadoEl": "2026-09-06",
+          "metodo": "revision-documental",
+          "alcance": "Instrucciones públicas; no se realizó una radicación de prueba."
+        }
+      ],
+      "canales": [
+        {
+          "tipo": "web",
+          "nombre": "Ver canal oficial de SENA",
+          "url": "https://sciudadanos.sena.edu.co/",
+          "fuenteId": "sena-pqrs"
+        },
+        {
+          "tipo": "orientacion",
+          "nombre": "Consultar puntos de atención y alternativas",
+          "url": "https://www.sena.edu.co/",
+          "fuenteId": "sena-pqrs"
+        }
+      ],
+      "tramiteDirecto": {
+        "titulo": "¿Puedes resolverlo en el portal de la entidad?",
+        "descripcion": "Busca primero tu certificado o trámite en los servicios del SENA. Si ya lo solicitaste, puedes pedir información sobre su estado.",
+        "url": "https://www.sena.edu.co/"
+      },
+      "ejemplo": "En el SENA no me han informado qué pasó con mi solicitud de certificado.",
+      "rutas": [
+        {
+          "id": "informacion",
+          "titulo": "Pedir información o copias",
+          "tipo": "peticion_informacion",
+          "diasHabiles": 10,
+          "orientacion": "Indica qué información o documento necesitas y el período al que corresponde.",
+          "requisitos": [
+            "Nombre del documento o información",
+            "Período o referencia, si la conoces"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "sena-pqrs"
+        },
+        {
+          "id": "estado",
+          "titulo": "Conocer el estado de un trámite",
+          "tipo": "peticion_interes_particular",
+          "diasHabiles": 15,
+          "orientacion": "Describe el trámite que ya iniciaste, cuándo lo presentaste y qué información necesitas.",
+          "requisitos": [
+            "Nombre del trámite ya iniciado",
+            "Fecha y radicado anterior, si los tienes"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "sena-pqrs"
+        },
+        {
+          "id": "atencion",
+          "titulo": "Reportar un problema de atención",
+          "tipo": "queja",
+          "diasHabiles": 15,
+          "orientacion": "Cuenta qué ocurrió durante la atención y qué respuesta o mejora solicitas.",
+          "requisitos": [
+            "Fecha aproximada y canal de atención",
+            "Descripción concreta de lo ocurrido"
+          ],
+          "reglaId": "ley1755-art14-v1",
+          "fuenteId": "sena-pqrs"
+        }
+      ]
+    }
+  ]
+}

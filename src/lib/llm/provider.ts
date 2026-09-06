@@ -1,13 +1,13 @@
-import type { PetitionTipo } from '@/lib/legal/constants';
-import type { GeneratedContent, IntakeInput } from '@/lib/schema/peticion';
-
+import type { Entidad } from '@/lib/entidades';
+import type { DraftInput, GeneratedContent } from '@/lib/schema/peticion';
 export interface GenerarParams {
-  input: IntakeInput;
-  tipo: PetitionTipo;
-  terminoDias: number;
+  input: DraftInput;
+  entity: Entidad;
 }
-
-/** Contrato de un proveedor de generación de contenido de peticiones. */
+export interface GenerationUsage {
+  inputTokens: number;
+  outputTokens: number;
+}
 export interface LLMProvider {
   readonly nombre: string;
   generarContenido(params: GenerarParams): Promise<GeneratedContent>;

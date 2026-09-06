@@ -1,202 +1,67 @@
-# MiPeticion
+# MiPetición
 
-**Ejerce tu derecho de petición sin abogado.** MiPeticion convierte el problema de una persona
-(en lenguaje natural) en un **derecho de petición formal y correcto**, listo para revisar, firmar,
-descargar en PDF y radicar. Hace seguimiento del término legal y —si la entidad no responde a
-tiempo— prepara un borrador de acción de tutela.
+**Tu petición, paso a paso.** Servicio comunitario independiente y gratuito para preparar una solicitud, encontrar el canal oficial y registrar su seguimiento.
 
-> El derecho de petición (art. 23 de la Constitución Política; Ley 1755 de 2015) permite a
-> cualquier persona exigir a una entidad pública una respuesta en un plazo legal. El problema no
-> es el derecho: es que la gente no sabe redactarlo, a qué entidad dirigirlo, qué tipo elegir ni
-> cómo hacerle seguimiento. MiPeticion resuelve exactamente eso.
-
-**MVP actual:** una sola entidad, la **DIAN** (Dirección de Impuestos y Aduanas Nacionales), y un
-flujo individual. La arquitectura está pensada para crecer a **cualquier entidad pública de
-Colombia** (ver [Visión a futuro](#-visión-a-futuro-de-la-dian-a-cualquier-entidad-pública)).
-
-> ⚠️ **MiPeticion no es asesoría legal.** Es una herramienta que ayuda a redactar; la persona
-> revisa, firma y radica. Nunca radicamos en nombre de nadie.
-
----
-
-## Estado actual
-
-Incrementos 0–2 **completos y verificados de extremo a extremo** (generar → editar → PDF):
-
-| Área | Qué hay | Verificación |
-| --- | --- | --- |
-| Scaffold | Next.js 16 (App Router) · TypeScript estricto · Tailwind v4 | build/typecheck limpios |
-| Motor legal | Festivos de Colombia por algoritmo + términos 10/15/30 días hábiles (Ley 1755/2015) | **19 pruebas Vitest** |
-| Capa LLM | Claude (Anthropic) con salida estructurada validada por Zod + *fallback* de plantilla | `POST /api/generate → 200` |
-| Flujo `/crear` | Identificación → problema guiado → generación → **preview editable** | recorrido en navegador |
-| PDF | `POST /api/pdf` *stateless* con `@react-pdf/renderer` | PDF de 2 páginas válido |
-| Contenido legal | Guía de radicación DIAN, política de privacidad (Ley 1581/2012), descargo global | render OK |
-| Base de datos | Migración inicial (enums + `profiles`/`petitions`/`filings`/`events` + RLS) | escrita; provisión diferida |
-
----
-
-## Cómo funciona (flujo del usuario)
-
-1. **Identificación** — nombre, tipo y número de documento, correo, ciudad. (Requisito legal: el
-   peticionario debe estar identificado.)
-2. **Intake guiado** — categoría del problema, tipo de solicitud, "¿qué pasó?" y "¿qué pides?".
-3. **Generación** — la IA redacta un derecho de petición estructurado: encabezado, hechos
-   numerados, fundamentos, peticiones concretas, solicitud de respuesta en término legal y datos
-   de notificación.
-4. **Revisión y edición** en pantalla (todo editable).
-5. **Descarga** del PDF (o copiar texto) + **guía para radicar** en la DIAN.
-6. *(Próximamente)* Registro del radicado → cálculo del plazo y recordatorios.
-7. *(Próximamente)* Si vence sin respuesta → **borrador de acción de tutela**.
-
-Generar, editar y descargar **no requiere cuenta**: el borrador vive en el navegador
-(`localStorage`). Solo se pedirá correo (enlace mágico) para **guardar** y activar el seguimiento
-del plazo — así se minimiza el almacenamiento de datos personales (Ley 1581/2012).
-
----
-
-## Stack y arquitectura
-
-- **Next.js 16** (App Router) + **TypeScript estricto** + **Tailwind v4**.
-- **Claude (Anthropic)** para la redacción — API key **solo en el servidor**. La capa `src/lib/llm/`
-  está abstraída detrás de una interfaz `LLMProvider`; si no hay `ANTHROPIC_API_KEY`, usa un
-  generador de plantilla determinística (útil en dev y pruebas).
-- **Zod** valida tanto la entrada del intake como la salida del modelo.
-- **@react-pdf/renderer** genera el PDF en un route handler *stateless* (recibe el documento en el
-  body), de modo que el flujo sin-cuenta también descarga.
-- **Supabase** (Auth + Postgres + RLS) para cuentas y seguimiento — *provisión diferida* (ver abajo).
-
-### Principio de diseño: la corrección legal vive en el código, no en el prompt
-
-- El **término legal** (10/15/30 días hábiles) lo fija el **código** según el tipo de solicitud,
-  nunca el modelo (`src/lib/legal/constants.ts`, `terminos.ts`).
-- Los **días hábiles** excluyen fines de semana y **festivos de Colombia calculados por algoritmo**
-  (Pascua + fechas fijas + traslados de la Ley Emiliani) — incluye el nuevo festivo de la **Virgen
-  de Chiquinquirá (Ley 2578 de 2026)**, con nota sobre la demanda de inconstitucionalidad pendiente.
-- Se distingue **petición** de **denuncia** (no se mezclan) y se mantiene un **descargo** visible en
-  toda la app y en el PDF.
-
-### Estructura del proyecto
-
-```
-src/
-  app/
-    page.tsx                 Landing
-    crear/                   Flujo principal (3 pasos)
-    guia-dian/               Cómo radicar en la DIAN
-    privacidad/              Política de tratamiento de datos (Ley 1581/2012)
-    api/generate/route.ts    Genera el contenido (server-only, rate-limit)
-    api/pdf/route.ts         Renderiza el PDF (stateless)
-  components/                UI (chrome, intake, preview editable)
-  lib/
-    legal/                   festivos.ts · terminos.ts · constants.ts (+ tests)
-    llm/                     provider.ts · anthropic.ts · template.ts · prompt.ts
-    peticion/                ensamblar.ts · texto.ts · storage.ts
-    pdf/                     PeticionPdf.tsx
-    schema/                  peticion.ts (Zod)
-supabase/migrations/         Esquema inicial + RLS
-```
-
----
+El piloto cubre DIAN, Colpensiones, Prosperidad Social, ICETEX y SENA. Cada entidad ofrece tres rutas: información/copias, estado de un trámite y problemas de atención administrativa. La persona confirma la entidad, revisa el documento y lo radica directamente. Descargar un PDF nunca equivale a radicar.
 
 ## Desarrollo local
 
-**Requisitos:** Node 20+ y npm.
+Node.js 22 y npm. No necesitas credenciales pagas.
 
-```bash
-npm install
-cp .env.example .env.local   # opcional: agrega tu ANTHROPIC_API_KEY para usar Claude real
-npm run dev                  # http://localhost:3000
+```sh
+npm ci
+cp .env.example .env.local
+npm run dev
 ```
 
-Sin `ANTHROPIC_API_KEY`, la app funciona con el generador de plantilla. Con la clave, la redacción
-usa Claude (`LLM_MODEL`, por defecto `claude-sonnet-5`).
+Abre http://localhost:3000. Sin servicios configurados funciona la plantilla, el directorio, la edición y el PDF. Las cuentas se muestran como no disponibles. No cambies a una base de producción para probar con datos sintéticos.
 
-| Script | Qué hace |
-| --- | --- |
-| `npm run dev` | Servidor de desarrollo |
-| `npm run build` / `npm start` | Build de producción y arranque |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | ESLint |
-| `npm test` | Pruebas Vitest (motor legal) |
+```sh
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
 
-### Variables de entorno
+Las pruebas de base de datos ejecutan las migraciones completas sobre Postgres embebido (PGlite), con roles y RLS. No requieren Docker. La suite de navegador usa un servidor de desarrollo local; configura `PLAYWRIGHT_BASE_URL` si ya tienes uno. El conjunto de rutas contiene 100 casos sintéticos; no equivale a una evaluación con personas reales ni a una evaluación del modelo en producción.
 
-Ver [`.env.example`](.env.example). Resumen:
+## Arquitectura
 
-- `ANTHROPIC_API_KEY`, `LLM_MODEL` — IA (solo servidor).
-- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` —
-  Supabase (Incremento 3). La `service_role` es **solo servidor**.
+Una aplicación Next.js con:
 
----
+- Directorio JSON validado con Zod y guías públicas cacheadas.
+- Análisis determinístico local y ayuda opcional de Anthropic con consentimiento, salida restringida, tiempo máximo y presupuesto compartido.
+- Identificación añadida en el navegador; ninguna propiedad de identificación forma parte de los contratos de IA.
+- Supabase Auth con código por correo, Postgres con RLS, APIs que verifican la identidad y RPCs exclusivas del servidor.
+- Cola duradera de recordatorios y eliminación por inactividad, reservas atómicas de correo/IA y correos genéricos.
+- Plantilla de respaldo explícita, exportación PDF/texto, JSON privado y controles de eliminación.
 
-## Base de datos (Supabase)
+Los borradores invitados usan sessionStorage. Guardarlos en el dispositivo requiere consentimiento y caducan a los siete días sin editar. Solo una acción expresa guarda un documento en una cuenta. No hay radicación automática, tutelas, representación ni determinaciones legales.
 
-La migración inicial está en [`supabase/migrations/`](supabase/migrations/):
-enums (`doc_type`, `petition_tipo`, `petition_status`) y tablas `profiles`, `petitions`, `filings`,
-`events`, con **RLS** por `auth.uid()` (cada quien solo ve y edita lo suyo).
+## Datos públicos y mantenimiento
 
-> **Provisión diferida.** El proyecto Supabase aún no se creó (la organización llegó a su límite de
-> proyectos). Cuando haya un cupo, se crea el proyecto, se aplica la migración y se generan los
-> tipos TypeScript. La tabla `petitions` ya incluye la columna `entity` (por defecto `'DIAN'`),
-> lista para multi-entidad.
+`GET /api/entidades/v1` publica el directorio reutilizable. Los archivos revisados están en `data/catalog`; el snapshot DANE está en `data/geography`. Las importaciones escriben candidatos en `data/staging`, nunca publican cambios automáticamente.
 
----
+```sh
+npm run data:registry
+npm run data:geography
+npm run data:check
+```
 
-## Pendiente (roadmap del MVP)
+Consulta [fuentes y revisión](docs/DATA.md), [licencias de datos](DATA_LICENSE.md) y [reglas de fechas](docs/DATE_FIXTURES.md).
 
-| # | Incremento | Depende de |
-| --- | --- | --- |
-| 3 | **Auth** (enlace mágico) + guardar/reclamar borrador + *dashboard* de peticiones | Supabase |
-| 4 | **Tracker**: registrar radicado + fecha → vencimiento en días hábiles → estado + recordatorios | Supabase |
-| 5 | **Borrador de acción de tutela** cuando vence sin respuesta | — (puede ser *stateless*) |
-| 6 | **Recordatorios por correo** (cron + proveedor de email) + moderación básica | Supabase |
+## Preparar el piloto
 
-**Se puede avanzar sin Supabase:** una calculadora de plazo *stateless* (radicado + fecha →
-vencimiento, usando el motor legal ya probado) y el borrador de tutela *stateless* (a partir de la
-petición + datos de radicación, igual que el PDF).
+[OPERATIONS.md](docs/OPERATIONS.md) explica Supabase, SMTP, cron, límites, privacidad y recuperación. [RELEASE.md](docs/RELEASE.md) separa las comprobaciones automatizadas de las validaciones que necesitan un entorno configurado o participantes.
 
----
+No habilites cuentas sin identificar al responsable y verificar su contacto. `info@mipeticion.co` es el contacto propuesto en el ejemplo, no un buzón cuya operación haya sido confirmada por el repositorio.
 
-## 🌱 Visión a futuro: de la DIAN a cualquier entidad pública
+## Contribuir / Contributing
 
-El objetivo es que MiPeticion sirva para presentar **PQRSD (peticiones, quejas, reclamos,
-sugerencias y denuncias) a cualquier entidad pública de Colombia** — alcaldías, gobernaciones,
-ministerios, superintendencias, secretarías, entidades de salud, servicios públicos, etc.
+Buscamos ayuda en desarrollo, diseño, accesibilidad y verificación de guías. Lee [CONTRIBUTING.md](CONTRIBUTING.md), el [código de conducta](CODE_OF_CONDUCT.md) y [SECURITY.md](SECURITY.md). Usa exclusivamente ejemplos sintéticos en pruebas e issues.
 
-**Por qué la base ya lo permite** (mucho es transversal, no específico de la DIAN):
+English: MiPetición is an independent Colombian civic service. It helps people prepare, submit through official channels, and privately track administrative requests. See the bilingual contributing guide. Local template development needs no paid credentials.
 
-- El **motor de términos** aplica la Ley 1755 de 2015 a *todas* las autoridades públicas: el cálculo
-  en días hábiles y festivos ya es genérico.
-- La **capa LLM** está abstraída: parametrizar por entidad es cambiar el contexto del prompt.
-- El **modelo de datos** ya tiene la columna `entity` en `petitions`.
-- El **PDF** y el **borrador de tutela** son genéricos por diseño.
-
-**Qué habría que construir para generalizar:**
-
-1. **Directorio de entidades** — un catálogo (empezando por las de mayor demanda) con: nombre,
-   competencia, tipos de solicitud admitidos, canal oficial de radicación (URL del PQRSD) y reglas
-   particulares (p. ej. términos o silencios administrativos especiales).
-2. **Selección / enrutamiento inteligente** — ayudar a la persona a elegir la entidad correcta
-   según su problema (o sugerirla a partir del relato), evitando peticiones mal dirigidas.
-3. **Reglas por entidad** — extraer lo hoy "DIAN" (destinatario, guía de radicación, tipos) a
-   configuración por entidad; el núcleo legal permanece compartido.
-4. **Contenido guiado por categoría y entidad** — plantillas y ejemplos según el tipo de trámite.
-
-**Más allá (fase 2+):**
-
-- **Peticiones colectivas** con firmas (interés general).
-- **Auto-ruteo y, eventualmente, radicación asistida** (con poder explícito; nunca en masa).
-- **App móvil** y notificaciones push.
-- **Panel de seguimiento** de todos los términos activos y su estado.
-
-**Guardrails que se mantienen al crecer:** calidad sobre volumen (una petición bien hecha, no spam),
-moderación básica (nada difamatorio ni denuncias falsas), la persona siempre firma y radica, y el
-descargo de "no es asesoría legal" siempre visible.
-
----
-
-## Aviso legal
-
-MiPeticion es una herramienta ciudadana de apoyo. **No constituye asesoría legal** y **no es una
-entidad pública**. Verifica y ajusta el contenido antes de firmarlo y radicarlo. La radicación la
-realiza la persona directamente ante la entidad correspondiente.
+Código: [Apache-2.0](LICENSE). Datos: licencias y atribuciones separadas en [DATA_LICENSE.md](DATA_LICENSE.md). El proyecto no tiene afiliación gubernamental.

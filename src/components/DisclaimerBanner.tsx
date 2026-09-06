@@ -1,4 +1,4 @@
-import { DISCLAIMER } from "@/lib/legal/constants";
+import { DISCLAIMER } from '@/lib/legal/constants';
 
 export function DisclaimerBanner() {
   return (

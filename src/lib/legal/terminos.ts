@@ -51,10 +51,7 @@ export interface Vencimiento {
 }
 
 /** Calcula la fecha de vencimiento del término legal para una radicación. */
-export function calcularVencimiento(
-  fechaRadicacionISO: string,
-  tipo: PetitionTipo,
-): Vencimiento {
+export function calcularVencimiento(fechaRadicacionISO: string, tipo: PetitionTipo): Vencimiento {
   const dias = terminoDias(tipo);
   const inicio = parseISODate(fechaRadicacionISO);
   const fin = sumarDiasHabiles(inicio, dias);
@@ -78,10 +75,7 @@ export interface EstadoVencimiento {
  * Evalúa el estado de un término frente a una fecha de referencia.
  * `por_vencer` cuando faltan 3 días hábiles o menos.
  */
-export function evaluarTermino(
-  fechaVencimientoISO: string,
-  referencia: Date,
-): EstadoVencimiento {
+export function evaluarTermino(fechaVencimientoISO: string, referencia: Date): EstadoVencimiento {
   const vencimiento = parseISODate(fechaVencimientoISO);
   const restantes = contarDiasHabiles(referencia, vencimiento);
   const vencido = vencimiento.getTime() < referencia.getTime();

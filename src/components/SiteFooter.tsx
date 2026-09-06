@@ -1,18 +1,26 @@
-import Link from "next/link";
-import { DISCLAIMER } from "@/lib/legal/constants";
-
+import Link from 'next/link';
 export function SiteFooter() {
   return (
-    <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto max-w-5xl space-y-2 px-4 py-6 text-xs text-slate-500">
-        <p>{DISCLAIMER}</p>
-        <p>
-          MiPeticion es una herramienta ciudadana para ejercer el derecho de petición (art. 23
-          C.P.; Ley 1755 de 2015). No somos la DIAN ni una entidad pública.{" "}
-          <Link href="/privacidad" className="underline hover:text-slate-700">
-            Política de tratamiento de datos
+    <footer className="site-footer">
+      <div className="container">
+        <div className="footer-top">
+          <Link href="/" className="brand">
+            MiPetición<span style={{ color: '#75936a' }}>.</span>
           </Link>
-          .
+          <nav aria-label="Información del proyecto" className="footer-links">
+            <Link href="/guias">Guías</Link>
+            <Link href="/proyecto">El proyecto</Link>
+            <Link href="/contribuir">Contribuir</Link>
+            <Link href="/privacidad">Privacidad</Link>
+            <a href="https://github.com/WELLFLEX/mipeticion" target="_blank" rel="noreferrer">
+              GitHub ↗
+            </a>
+          </nav>
+        </div>
+        <p className="footer-note">
+          Una iniciativa ciudadana, independiente de las entidades públicas. Te ayudamos a preparar
+          tu solicitud; tú revisas el contenido y la radicas. La información es orientativa y no
+          constituye asesoría legal.
         </p>
       </div>
     </footer>

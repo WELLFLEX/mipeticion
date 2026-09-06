@@ -1,40 +1,42 @@
-/**
- * Rate limit best-effort en memoria (token bucket por clave).
- *
- * Nota: en entornos serverless el estado no se comparte entre instancias, así
- * que esto es una defensa básica contra abuso, no un límite estricto. Para
- * producción real conviene un backend compartido (p. ej. Upstash/Redis).
- */
-interface Bucket {
-  tokens: number;
-  updated: number;
+import { createHmac } from 'node:crypto';
+import { serviceConfigured } from '@/lib/server/config';
+import { serviceClient } from '@/lib/server/db';
+const local = new Map<string, { count: number; until: number }>();
+export function callerKey(req: Request) {
+  const ip = process.env.VERCEL
+    ? req.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim()
+    : process.env.TRUST_PROXY === 'true'
+      ? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+      : 'local';
+  return createHmac('sha256', process.env.RATE_LIMIT_SECRET || 'local-development')
+    .update(ip || 'unknown')
+    .digest('hex');
 }
-
-const buckets = new Map<string, Bucket>();
-
-const DEFAULT_CAPACITY = 8; // ráfaga máxima
-const REFILL_PER_MS = DEFAULT_CAPACITY / 60_000; // se recarga la capacidad en 1 minuto
-
-export interface RateLimitResult {
-  ok: boolean;
-  retryAfterMs: number;
-}
-
-export function rateLimit(key: string, capacity: number = DEFAULT_CAPACITY): RateLimitResult {
-  const now = Date.now();
-  const bucket = buckets.get(key) ?? { tokens: capacity, updated: now };
-
-  const elapsed = now - bucket.updated;
-  bucket.tokens = Math.min(capacity, bucket.tokens + elapsed * REFILL_PER_MS);
-  bucket.updated = now;
-
-  if (bucket.tokens >= 1) {
-    bucket.tokens -= 1;
-    buckets.set(key, bucket);
-    return { ok: true, retryAfterMs: 0 };
+export async function quota(key: string, limit: number, seconds = 60): Promise<boolean> {
+  if (serviceConfigured()) {
+    try {
+      const { data, error } = await serviceClient().rpc('consume_quota', {
+        p_key: key,
+        p_limit: limit,
+        p_seconds: seconds,
+      });
+      return !error && data === true;
+    } catch {
+      return false;
+    }
   }
-
-  buckets.set(key, bucket);
-  const needed = 1 - bucket.tokens;
-  return { ok: false, retryAfterMs: Math.ceil(needed / REFILL_PER_MS) };
+  // Local, cost-free mode only. Paid AI and accounts require the shared database.
+  if (process.env.NODE_ENV === 'production') return false;
+  const now = Date.now();
+  for (const [k, b] of local) {
+    if (b.until < now) local.delete(k);
+  }
+  if (local.size > 10000) return false;
+  const b = local.get(key) ?? { count: 0, until: now + seconds * 1000 };
+  b.count++;
+  local.set(key, b);
+  return b.count <= limit;
+}
+export async function requestLimit(req: Request, scope: string, limit = 20) {
+  return quota(scope + ':' + callerKey(req), limit);
 }

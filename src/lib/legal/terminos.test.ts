@@ -20,14 +20,10 @@ describe('esDiaHabil', () => {
 describe('sumarDiasHabiles', () => {
   it('cuenta a partir del día siguiente (no incluye el día de inicio)', () => {
     // viernes 2026-07-17 + 1 hábil = lunes 2026-07-20 es festivo -> martes 21
-    expect(sumarDiasHabiles(parseISODate('2026-07-17'), 1)).toEqual(
-      parseISODate('2026-07-21'),
-    );
+    expect(sumarDiasHabiles(parseISODate('2026-07-17'), 1)).toEqual(parseISODate('2026-07-21'));
   });
   it('devuelve la misma fecha con n <= 0', () => {
-    expect(sumarDiasHabiles(parseISODate('2026-07-16'), 0)).toEqual(
-      parseISODate('2026-07-16'),
-    );
+    expect(sumarDiasHabiles(parseISODate('2026-07-16'), 0)).toEqual(parseISODate('2026-07-16'));
   });
 });
 
@@ -56,14 +52,10 @@ describe('calcularVencimiento — radicación 2026-07-16 (jueves)', () => {
 describe('contarDiasHabiles', () => {
   it('cuenta el intervalo (desde, hasta] excluyendo el inicio', () => {
     // 2026-07-16 (jue) -> 2026-07-21 (mar): 17 hábil, 20 festivo, 21 hábil = 2
-    expect(
-      contarDiasHabiles(parseISODate('2026-07-16'), parseISODate('2026-07-21')),
-    ).toBe(2);
+    expect(contarDiasHabiles(parseISODate('2026-07-16'), parseISODate('2026-07-21'))).toBe(2);
   });
   it('devuelve 0 cuando hasta <= desde', () => {
-    expect(
-      contarDiasHabiles(parseISODate('2026-07-20'), parseISODate('2026-07-16')),
-    ).toBe(0);
+    expect(contarDiasHabiles(parseISODate('2026-07-20'), parseISODate('2026-07-16'))).toBe(0);
   });
 });
 

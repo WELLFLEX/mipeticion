@@ -1,52 +1,30 @@
-import { createElement } from "react";
-import { renderToBuffer } from "@react-pdf/renderer";
-import { PeticionPdf } from "@/lib/pdf/PeticionPdf";
-import { rateLimit } from "@/lib/rate-limit";
-import { peticionDocumentSchema } from "@/lib/schema/peticion";
-
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
-function clientKey(req: Request): string {
-  const fwd = req.headers.get("x-forwarded-for");
-  return fwd?.split(",")[0]?.trim() || "local";
-}
-
+import { createElement } from 'react';
+import { renderToBuffer } from '@react-pdf/renderer';
+import { PeticionPdf } from '@/lib/pdf/PeticionPdf';
+import { peticionDocumentSchema } from '@/lib/schema/peticion';
+import { requestLimit } from '@/lib/rate-limit';
+import { readJson, fail, HttpError } from '@/lib/server/http';
+export const runtime = 'nodejs';
 export async function POST(req: Request) {
-  const rl = rateLimit(`pdf:${clientKey(req)}`, 12);
-  if (!rl.ok) {
-    return Response.json(
-      { error: "Demasiadas descargas. Intenta de nuevo en un momento." },
-      { status: 429, headers: { "Retry-After": String(Math.ceil(rl.retryAfterMs / 1000)) } },
+  try {
+    const body = await readJson(req, 96_000);
+    const parsed = peticionDocumentSchema.safeParse((body as { documento?: unknown })?.documento);
+    if (!parsed.success) throw new HttpError(400, 'Revisa los campos del documento.');
+    if (!(await requestLimit(req, 'pdf', 12)))
+      throw new HttpError(429, 'Demasiadas descargas. Intenta de nuevo en un minuto.');
+    const buffer = await renderToBuffer(
+      createElement(PeticionPdf, { documento: parsed.data }) as Parameters<
+        typeof renderToBuffer
+      >[0],
     );
-  }
-
-  let body: unknown;
-  try {
-    body = await req.json();
-  } catch {
-    return Response.json({ error: "Cuerpo inválido." }, { status: 400 });
-  }
-
-  const parsed = peticionDocumentSchema.safeParse((body as { documento?: unknown })?.documento);
-  if (!parsed.success) {
-    return Response.json({ error: "Documento inválido." }, { status: 400 });
-  }
-
-  try {
-    const elemento = createElement(PeticionPdf, {
-      documento: parsed.data,
-    }) as Parameters<typeof renderToBuffer>[0];
-    const buffer = await renderToBuffer(elemento);
     return new Response(new Uint8Array(buffer), {
       headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="derecho-de-peticion-DIAN.pdf"',
-        "Cache-Control": "no-store",
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment; filename="peticion.pdf"',
+        'Cache-Control': 'private, no-store',
       },
     });
-  } catch (err) {
-    console.error("[pdf] fallo al renderizar", err);
-    return Response.json({ error: "No se pudo generar el PDF." }, { status: 500 });
+  } catch (e) {
+    return fail(e);
   }
 }

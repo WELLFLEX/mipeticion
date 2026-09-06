@@ -1,0 +1,706 @@
+{
+  "description": "100 synthetic cases: 60 supported across all fifteen pathways, 20 explicit exclusions, 20 ambiguous. Labels written before evaluation. Deterministic release baseline; live model evaluation is a separate pre-beta check.",
+  "version": "1.0",
+  "cases": [
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "informacion",
+      "quePaso": "Necesito consultar requisitos generales en DIAN antes de empezar.",
+      "quePides": "Quiero información sobre los requisitos publicados."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "informacion",
+      "quePaso": "No encuentro una copia del formulario que entregué a DIAN.",
+      "quePides": "Solicito copia del formulario que presenté."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "informacion",
+      "quePaso": "En el sitio de DIAN no encontré el horario de orientación.",
+      "quePides": "Quisiera información sobre horarios de servicio."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "informacion",
+      "quePaso": "Tengo un expediente en DIAN y quiero revisarlo.",
+      "quePides": "Necesito copias de los documentos de mi expediente."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "estado",
+      "quePaso": "Presenté una solicitud en DIAN hace semanas y no he recibido respuesta.",
+      "quePides": "Quiero conocer en qué estado está mi trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "estado",
+      "quePaso": "Hice una gestión con DIAN, tengo radicado y sigo esperando.",
+      "quePides": "Solicito que me indiquen cómo va el trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "estado",
+      "quePaso": "En DIAN recibieron mi solicitud, pero no veo movimientos.",
+      "quePides": "Quiero que me informen en qué quedó mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "estado",
+      "quePaso": "Ya tengo una solicitud en DIAN; no conozco el siguiente paso.",
+      "quePides": "Necesito información sobre el estado de mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "atencion",
+      "quePaso": "En la oficina de DIAN una persona me gritó cuando fui a pedir ayuda.",
+      "quePides": "Quiero que revisen la atención que recibí."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "atencion",
+      "quePaso": "Pedí orientación a DIAN y me atendieron de manera grosera.",
+      "quePides": "Quiero presentar una queja por el trato recibido."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "atencion",
+      "quePaso": "Intenté hablar con DIAN por teléfono, pero no me atendieron.",
+      "quePides": "Solicito que revisen los problemas de atención telefónica."
+    },
+    {
+      "status": "supported",
+      "entity": "dian",
+      "pathway": "atencion",
+      "quePaso": "En DIAN me mandaron de una ventanilla a otra sin escucharme.",
+      "quePides": "Quiero que mejoren la atención administrativa."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "informacion",
+      "quePaso": "Necesito consultar requisitos generales en Colpensiones antes de empezar.",
+      "quePides": "Quiero información sobre los requisitos publicados."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "informacion",
+      "quePaso": "No encuentro una copia del formulario que entregué a Colpensiones.",
+      "quePides": "Solicito copia del formulario que presenté."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "informacion",
+      "quePaso": "En el sitio de Colpensiones no encontré el horario de orientación.",
+      "quePides": "Quisiera información sobre horarios de servicio."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "informacion",
+      "quePaso": "Tengo un expediente en Colpensiones y quiero revisarlo.",
+      "quePides": "Necesito copias de los documentos de mi expediente."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "estado",
+      "quePaso": "Presenté una solicitud en Colpensiones hace semanas y no he recibido respuesta.",
+      "quePides": "Quiero conocer en qué estado está mi trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "estado",
+      "quePaso": "Hice una gestión con Colpensiones, tengo radicado y sigo esperando.",
+      "quePides": "Solicito que me indiquen cómo va el trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "estado",
+      "quePaso": "En Colpensiones recibieron mi solicitud, pero no veo movimientos.",
+      "quePides": "Quiero que me informen en qué quedó mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "estado",
+      "quePaso": "Ya tengo una solicitud en Colpensiones; no conozco el siguiente paso.",
+      "quePides": "Necesito información sobre el estado de mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "atencion",
+      "quePaso": "En la oficina de Colpensiones una persona me gritó cuando fui a pedir ayuda.",
+      "quePides": "Quiero que revisen la atención que recibí."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "atencion",
+      "quePaso": "Pedí orientación a Colpensiones y me atendieron de manera grosera.",
+      "quePides": "Quiero presentar una queja por el trato recibido."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "atencion",
+      "quePaso": "Intenté hablar con Colpensiones por teléfono, pero no me atendieron.",
+      "quePides": "Solicito que revisen los problemas de atención telefónica."
+    },
+    {
+      "status": "supported",
+      "entity": "colpensiones",
+      "pathway": "atencion",
+      "quePaso": "En Colpensiones me mandaron de una ventanilla a otra sin escucharme.",
+      "quePides": "Quiero que mejoren la atención administrativa."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "informacion",
+      "quePaso": "Necesito consultar requisitos generales en Prosperidad Social antes de empezar.",
+      "quePides": "Quiero información sobre los requisitos publicados."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "informacion",
+      "quePaso": "No encuentro una copia del formulario que entregué a Prosperidad Social.",
+      "quePides": "Solicito copia del formulario que presenté."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "informacion",
+      "quePaso": "En el sitio de Prosperidad Social no encontré el horario de orientación.",
+      "quePides": "Quisiera información sobre horarios de servicio."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "informacion",
+      "quePaso": "Tengo un expediente en Prosperidad Social y quiero revisarlo.",
+      "quePides": "Necesito copias de los documentos de mi expediente."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "estado",
+      "quePaso": "Presenté una solicitud en Prosperidad Social hace semanas y no he recibido respuesta.",
+      "quePides": "Quiero conocer en qué estado está mi trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "estado",
+      "quePaso": "Hice una gestión con Prosperidad Social, tengo radicado y sigo esperando.",
+      "quePides": "Solicito que me indiquen cómo va el trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "estado",
+      "quePaso": "En Prosperidad Social recibieron mi solicitud, pero no veo movimientos.",
+      "quePides": "Quiero que me informen en qué quedó mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "estado",
+      "quePaso": "Ya tengo una solicitud en Prosperidad Social; no conozco el siguiente paso.",
+      "quePides": "Necesito información sobre el estado de mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "atencion",
+      "quePaso": "En la oficina de Prosperidad Social una persona me gritó cuando fui a pedir ayuda.",
+      "quePides": "Quiero que revisen la atención que recibí."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "atencion",
+      "quePaso": "Pedí orientación a Prosperidad Social y me atendieron de manera grosera.",
+      "quePides": "Quiero presentar una queja por el trato recibido."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "atencion",
+      "quePaso": "Intenté hablar con Prosperidad Social por teléfono, pero no me atendieron.",
+      "quePides": "Solicito que revisen los problemas de atención telefónica."
+    },
+    {
+      "status": "supported",
+      "entity": "prosperidad-social",
+      "pathway": "atencion",
+      "quePaso": "En Prosperidad Social me mandaron de una ventanilla a otra sin escucharme.",
+      "quePides": "Quiero que mejoren la atención administrativa."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "informacion",
+      "quePaso": "Necesito consultar requisitos generales en ICETEX antes de empezar.",
+      "quePides": "Quiero información sobre los requisitos publicados."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "informacion",
+      "quePaso": "No encuentro una copia del formulario que entregué a ICETEX.",
+      "quePides": "Solicito copia del formulario que presenté."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "informacion",
+      "quePaso": "En el sitio de ICETEX no encontré el horario de orientación.",
+      "quePides": "Quisiera información sobre horarios de servicio."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "informacion",
+      "quePaso": "Tengo un expediente en ICETEX y quiero revisarlo.",
+      "quePides": "Necesito copias de los documentos de mi expediente."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "estado",
+      "quePaso": "Presenté una solicitud en ICETEX hace semanas y no he recibido respuesta.",
+      "quePides": "Quiero conocer en qué estado está mi trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "estado",
+      "quePaso": "Hice una gestión con ICETEX, tengo radicado y sigo esperando.",
+      "quePides": "Solicito que me indiquen cómo va el trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "estado",
+      "quePaso": "En ICETEX recibieron mi solicitud, pero no veo movimientos.",
+      "quePides": "Quiero que me informen en qué quedó mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "estado",
+      "quePaso": "Ya tengo una solicitud en ICETEX; no conozco el siguiente paso.",
+      "quePides": "Necesito información sobre el estado de mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "atencion",
+      "quePaso": "En la oficina de ICETEX una persona me gritó cuando fui a pedir ayuda.",
+      "quePides": "Quiero que revisen la atención que recibí."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "atencion",
+      "quePaso": "Pedí orientación a ICETEX y me atendieron de manera grosera.",
+      "quePides": "Quiero presentar una queja por el trato recibido."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "atencion",
+      "quePaso": "Intenté hablar con ICETEX por teléfono, pero no me atendieron.",
+      "quePides": "Solicito que revisen los problemas de atención telefónica."
+    },
+    {
+      "status": "supported",
+      "entity": "icetex",
+      "pathway": "atencion",
+      "quePaso": "En ICETEX me mandaron de una ventanilla a otra sin escucharme.",
+      "quePides": "Quiero que mejoren la atención administrativa."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "informacion",
+      "quePaso": "Necesito consultar requisitos generales en SENA antes de empezar.",
+      "quePides": "Quiero información sobre los requisitos publicados."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "informacion",
+      "quePaso": "No encuentro una copia del formulario que entregué a SENA.",
+      "quePides": "Solicito copia del formulario que presenté."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "informacion",
+      "quePaso": "En el sitio de SENA no encontré el horario de orientación.",
+      "quePides": "Quisiera información sobre horarios de servicio."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "informacion",
+      "quePaso": "Tengo un expediente en SENA y quiero revisarlo.",
+      "quePides": "Necesito copias de los documentos de mi expediente."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "estado",
+      "quePaso": "Presenté una solicitud en SENA hace semanas y no he recibido respuesta.",
+      "quePides": "Quiero conocer en qué estado está mi trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "estado",
+      "quePaso": "Hice una gestión con SENA, tengo radicado y sigo esperando.",
+      "quePides": "Solicito que me indiquen cómo va el trámite."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "estado",
+      "quePaso": "En SENA recibieron mi solicitud, pero no veo movimientos.",
+      "quePides": "Quiero que me informen en qué quedó mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "estado",
+      "quePaso": "Ya tengo una solicitud en SENA; no conozco el siguiente paso.",
+      "quePides": "Necesito información sobre el estado de mi solicitud."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "atencion",
+      "quePaso": "En la oficina de SENA una persona me gritó cuando fui a pedir ayuda.",
+      "quePides": "Quiero que revisen la atención que recibí."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "atencion",
+      "quePaso": "Pedí orientación a SENA y me atendieron de manera grosera.",
+      "quePides": "Quiero presentar una queja por el trato recibido."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "atencion",
+      "quePaso": "Intenté hablar con SENA por teléfono, pero no me atendieron.",
+      "quePides": "Solicito que revisen los problemas de atención telefónica."
+    },
+    {
+      "status": "supported",
+      "entity": "sena",
+      "pathway": "atencion",
+      "quePaso": "En SENA me mandaron de una ventanilla a otra sin escucharme.",
+      "quePides": "Quiero que mejoren la atención administrativa."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Mi EPS no entrega los medicamentos que necesito.",
+      "quePides": "Solicito recibir mi tratamiento a tiempo."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Estoy en un hospital, no puedo respirar y nadie me atiende.",
+      "quePides": "Necesito atención de urgencia ahora mismo."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Quiero que Colpensiones reconozca mi pensión de vejez.",
+      "quePides": "Solicito el reconocimiento de pension."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "La DIAN me impuso una sanción y quiero presentar un recurso.",
+      "quePides": "Necesito interponer un recurso tributario."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Quisiera negociar mi deuda con el ICETEX porque no puedo pagar.",
+      "quePides": "Necesito un acuerdo de pago con cuotas menores."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "La empresa de energía me cobró mucho este mes.",
+      "quePides": "Quiero reclamar la factura de servicios públicos."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Llevo varios días sin agua en mi vivienda.",
+      "quePides": "Necesito reclamar ante el acueducto."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Quiero presentar una tutela por falta de respuesta.",
+      "quePides": "Quiero que redacten la tutela ahora."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Vi hechos de corrupción en el SENA y necesito denunciarlos.",
+      "quePides": "Quiero presentar una denuncia por corrupción."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Necesito reclamar en nombre de mi madre ante Colpensiones.",
+      "quePides": "Quiero que cambien los datos de ella."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "La factura del gas tiene consumos que no reconozco.",
+      "quePides": "Solicito que revisen la facturación."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Busco una condonacion de mi crédito en ICETEX.",
+      "quePides": "Quiero que me perdonen el saldo de la deuda."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Un funcionario de Prosperidad Social me amenazó.",
+      "quePides": "Quiero presentar una denuncia penal."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Quiero presentar una petición colectiva a la DIAN.",
+      "quePides": "Necesitamos que represente a todos los vecinos."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Quisiera una queja anonima por atención en el SENA.",
+      "quePides": "Necesito omitir toda identificación personal."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "En Colpensiones necesito pensionarme ya.",
+      "quePides": "Solicito que decidan el reconocimiento de pension."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Necesito pedir la prescripción de obligaciones a DIAN.",
+      "quePides": "Solicito que extingan las obligaciones tributarias."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Necesito levantar un embargo ordenado por la DIAN.",
+      "quePides": "Quiero una decisión que levante el embargo."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Deseo actuar en representacion de mi hermano ante ICETEX.",
+      "quePides": "Solicito corregir los datos de mi hermano."
+    },
+    {
+      "status": "referral",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Presentaré una apelacion de la decisión del SENA.",
+      "quePides": "Necesito apelar para revocar esa decisión."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Tengo un papel que nadie me explica y me piden volver mañana.",
+      "quePides": "Quiero saber quién me puede ayudar."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "No recuerdo el nombre de la entidad que recibió mi solicitud.",
+      "quePides": "Necesito conocer el estado del trámite."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Me enviaron de la DIAN al SENA y no entiendo por qué.",
+      "quePides": "Quiero información sobre los requisitos."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Colpensiones e ICETEX aparecen en los mensajes que recibí.",
+      "quePides": "Necesito una copia de la comunicación."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Prosperidad Social y SENA me dicen cosas distintas.",
+      "quePides": "Necesito información que aclare el proceso."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Hace un mes dejé unos papeles en una oficina del centro.",
+      "quePides": "Quiero conocer cómo va mi solicitud."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Me atendieron mal en una entidad cuyo nombre no recuerdo.",
+      "quePides": "Quiero presentar una queja por la atención."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "No encuentro la entidad donde hice una solicitud.",
+      "quePides": "Quiero copias de los documentos entregados."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Fui al SENA y ahora la DIAN dice que no corresponde.",
+      "quePides": "Solicito orientación sobre los requisitos."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Estoy esperando un correo de una oficina pública.",
+      "quePides": "Quiero saber si hay una respuesta a mi solicitud."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Colpensiones e ICETEX me pidieron información diferente.",
+      "quePides": "Quiero consultar el estado de mi trámite."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "No sé por dónde empezar ni a qué oficina ir.",
+      "quePides": "Quiero una explicación de los requisitos."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Necesito ayuda del ICETEX con una situación personal.",
+      "quePides": "Quisiera que me ayudaran a encontrar una solución."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Necesito ayuda de Colpensiones con un inconveniente.",
+      "quePides": "Quiero resolver lo que me está pasando."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "El SENA me envió un mensaje difícil de comprender.",
+      "quePides": "Quisiera que alguien me ayudara a entenderlo."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Prosperidad Social me contactó y no entendí el motivo.",
+      "quePides": "Necesito que me ayuden a aclararlo."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Me llegó un correo de la DIAN que no entiendo bien.",
+      "quePides": "Necesito ayuda para entender qué ocurrió."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Hice una vuelta hace tiempo y no sé a dónde volver.",
+      "quePides": "Quiero conocer el estado de la solicitud."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Tengo una cita pero no me dicen en qué lugar es.",
+      "quePides": "Necesito información sobre dónde asistir."
+    },
+    {
+      "status": "clarify",
+      "entity": null,
+      "pathway": null,
+      "quePaso": "Me hablaron de un programa del SENA y de Prosperidad Social.",
+      "quePides": "Quiero información sobre sus requisitos."
+    }
+  ]
+}

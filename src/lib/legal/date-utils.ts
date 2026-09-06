@@ -22,7 +22,8 @@ export function parseISODate(iso: string): Date {
   if (!m) throw new Error(`Fecha ISO inválida: "${iso}" (se espera YYYY-MM-DD)`);
   const [, y, mo, d] = m;
   const date = new Date(Date.UTC(Number(y), Number(mo) - 1, Number(d)));
-  if (Number.isNaN(date.getTime())) throw new Error(`Fecha inválida: "${iso}"`);
+  if (Number.isNaN(date.getTime()) || toISODate(date) !== iso.trim())
+    throw new Error(`Fecha inválida: "${iso}"`);
   return date;
 }
 

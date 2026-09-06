@@ -2,9 +2,9 @@
  * Documento PDF del derecho de petición (server-only, @react-pdf/renderer).
  * Usa Helvetica (incluida) que soporta acentos y ñ.
  */
-import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import { DISCLAIMER, docTypeLabel } from "@/lib/legal/constants";
-import type { PeticionDocument } from "@/lib/schema/peticion";
+import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { DISCLAIMER, docTypeLabel } from '@/lib/legal/constants';
+import type { PeticionDocument } from '@/lib/schema/peticion';
 
 const styles = StyleSheet.create({
   page: {
@@ -12,43 +12,43 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
     paddingHorizontal: 64,
     fontSize: 11,
-    fontFamily: "Helvetica",
-    color: "#111827",
+    fontFamily: 'Helvetica',
+    color: '#111827',
     lineHeight: 1.45,
   },
-  right: { textAlign: "right", color: "#374151" },
-  bold: { fontFamily: "Helvetica-Bold" },
+  right: { textAlign: 'right', color: '#374151' },
+  bold: { fontFamily: 'Helvetica-Bold' },
   gap8: { marginBottom: 8 },
   gap12: { marginBottom: 12 },
-  entidad: { fontFamily: "Helvetica-Bold", textTransform: "uppercase" },
+  entidad: { fontFamily: 'Helvetica-Bold', textTransform: 'uppercase' },
   heading: {
-    fontFamily: "Helvetica-Bold",
+    fontFamily: 'Helvetica-Bold',
     fontSize: 11,
     marginTop: 14,
     marginBottom: 5,
   },
-  justify: { textAlign: "justify" },
-  item: { flexDirection: "row", marginBottom: 4 },
-  num: { width: 20, fontFamily: "Helvetica-Bold" },
-  itemText: { flex: 1, textAlign: "justify" },
+  justify: { textAlign: 'justify' },
+  item: { flexDirection: 'row', marginBottom: 4 },
+  num: { width: 20, fontFamily: 'Helvetica-Bold' },
+  itemText: { flex: 1, textAlign: 'justify' },
   termino: {
     marginTop: 12,
     marginBottom: 12,
-    textAlign: "justify",
+    textAlign: 'justify',
   },
-  firmaLinea: { marginTop: 36, borderTopWidth: 1, borderTopColor: "#111827", width: 220 },
-  firmaNombre: { fontFamily: "Helvetica-Bold", marginTop: 2 },
-  muted: { color: "#6b7280" },
+  firmaLinea: { marginTop: 36, borderTopWidth: 1, borderTopColor: '#111827', width: 220 },
+  firmaNombre: { fontFamily: 'Helvetica-Bold', marginTop: 2 },
+  muted: { color: '#6b7280' },
   footer: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 28,
     left: 64,
     right: 64,
     fontSize: 7.5,
-    color: "#9ca3af",
-    textAlign: "center",
+    color: '#9ca3af',
+    textAlign: 'center',
     borderTopWidth: 0.5,
-    borderTopColor: "#e5e7eb",
+    borderTopColor: '#e5e7eb',
     paddingTop: 6,
   },
 });
@@ -70,8 +70,8 @@ export function PeticionPdf({ documento }: { documento: PeticionDocument }) {
   const p = documento.peticionario;
   const encabezado =
     `Yo, ${p.nombre}, identificado(a) con ${docTypeLabel(p.docType)} No. ${p.docNumber}` +
-    (p.ciudad ? `, con domicilio en ${p.ciudad}` : "") +
-    ", en ejercicio del derecho fundamental de petición, me permito presentar la siguiente solicitud.";
+    (p.ciudad ? `, con domicilio en ${p.ciudad}` : '') +
+    ', en ejercicio del derecho fundamental de petición, me permito presentar la siguiente solicitud.';
 
   return (
     <Document

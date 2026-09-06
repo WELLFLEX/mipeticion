@@ -1,121 +1,199 @@
-import Link from "next/link";
-import { PETITION_TIPOS } from "@/lib/legal/constants";
-
-const PASOS = [
-  {
-    n: 1,
-    titulo: "Cuéntanos tu caso",
-    texto:
-      "Escribe en tus palabras qué pasó con la DIAN y qué necesitas. Sin lenguaje legal.",
-  },
-  {
-    n: 2,
-    titulo: "Generamos el documento",
-    texto:
-      "Convertimos tu problema en un derecho de petición formal, con hechos, fundamentos y peticiones.",
-  },
-  {
-    n: 3,
-    titulo: "Revisa y descarga",
-    texto: "Editas lo que quieras, descargas el PDF y lo radicas tú mismo(a) en la DIAN.",
-  },
-  {
-    n: 4,
-    titulo: "Seguimiento del plazo",
-    texto:
-      "Registras el radicado y te avisamos del término legal. Si no responden, generamos un borrador de tutela. (Próximamente)",
-  },
-];
-
+import Link from 'next/link';
+import { Icon } from '@/components/Icon';
+import { ENTIDADES } from '@/lib/entidades';
 export default function Home() {
   return (
-    <div>
-      {/* Hero */}
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-16 sm:py-20">
-          <p className="text-sm font-semibold text-indigo-600">
-            Derecho de petición · Art. 23 C.P. · Ley 1755 de 2015
-          </p>
-          <h1 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Exige una respuesta formal de la DIAN, sin abogado.
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-slate-600">
-            El derecho de petición te permite exigir a la DIAN una respuesta en un plazo legal.
-            MiPeticion convierte tu problema en un documento correcto, listo para que lo firmes y
-            radiques.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link
-              href="/crear"
-              className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white hover:bg-indigo-700"
-            >
-              Crear mi derecho de petición
-            </Link>
-            <Link
-              href="/guia-dian"
-              className="rounded-md border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-            >
-              Cómo se radica en la DIAN
-            </Link>
-          </div>
-          <p className="mt-4 text-xs text-slate-500">
-            Gratis y sin cuenta para generar y descargar. No es asesoría legal.
-          </p>
-        </div>
-      </section>
-
-      {/* Cómo funciona */}
-      <section className="mx-auto max-w-5xl px-4 py-14">
-        <h2 className="text-xl font-bold text-slate-900">Cómo funciona</h2>
-        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {PASOS.map((p) => (
-            <div key={p.n} className="rounded-xl border border-slate-200 bg-white p-5">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-700">
-                {p.n}
-              </span>
-              <h3 className="mt-3 font-semibold text-slate-900">{p.titulo}</h3>
-              <p className="mt-1 text-sm text-slate-600">{p.texto}</p>
+    <>
+      <div className="container">
+        <section className="hero">
+          <div>
+            <p className="eyebrow">Una herramienta ciudadana para Colombia</p>
+            <h1>
+              Tu voz cuenta.
+              <br />
+              Tu petición,
+              <br />
+              <span>paso a paso.</span>
+            </h1>
+            <p className="hero-copy">
+              Te ayudamos a preparar tu solicitud, encontrar dónde enviarla y hacer seguimiento. En
+              tus palabras, sin enredos.
+            </p>
+            <div className="hero-actions">
+              <Link className="button" href="/crear">
+                Crear mi petición <Icon size={18} />
+              </Link>
+              <Link className="button secondary" href="/entidades">
+                Buscar una entidad
+              </Link>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Términos legales */}
-      <section className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-14">
-          <h2 className="text-xl font-bold text-slate-900">
-            Plazos según el tipo de petición
-          </h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Calculamos el vencimiento en días hábiles (excluyendo fines de semana y festivos de
-            Colombia), conforme a la Ley 1755 de 2015.
-          </p>
-          <div className="mt-6 overflow-x-auto">
-            <table className="w-full min-w-[420px] border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-slate-200 text-left text-slate-500">
-                  <th className="py-2 pr-4 font-medium">Tipo de solicitud</th>
-                  <th className="py-2 pr-4 font-medium">Término</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PETITION_TIPOS.map((t) => (
-                  <tr key={t.value} className="border-b border-slate-100">
-                    <td className="py-2 pr-4 text-slate-800">{t.label}</td>
-                    <td className="py-2 pr-4 font-medium text-slate-900">
-                      {t.termDays} días hábiles
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="hero-assurance">
+              <span>
+                <Icon name="check" size={14} /> Gratis para la ciudadanía
+              </span>
+              <span>
+                <Icon name="check" size={14} /> Sin cuenta para empezar
+              </span>
+            </div>
           </div>
-          <p className="mt-3 text-xs text-slate-500">
-            El término lo determina el tipo de solicitud, no el texto: MiPeticion lo fija
-            automáticamente.
-          </p>
+          <div className="hero-art" aria-label="Ejemplo ilustrativo de una petición organizada">
+            <div className="paper-demo">
+              <div className="demo-top">
+                <Icon name="document" size={27} />
+                <span>MI PETICIÓN</span>
+              </div>
+              <h2>
+                Una solicitud clara.
+                <br />
+                Un siguiente paso.
+              </h2>
+              <p>
+                Tus hechos, tus preguntas y lo que necesitas.
+                <br />
+                Todo en un mismo lugar.
+              </p>
+              <div className="demo-lines" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+              </div>
+              <div className="demo-bottom">
+                <Icon name="check" size={15} /> Lista para que la revises
+              </div>
+            </div>
+            <div className="floating-note">
+              <Icon name="shield" size={27} />
+              <div>
+                <strong>Tú tienes el control</strong>
+                <p>Revisa, edita y envía cuando estés listo.</p>
+              </div>
+            </div>
+            <p className="art-caption">Ejemplo ilustrativo. Descargar no significa radicar.</p>
+          </div>
+        </section>
+        <div className="trust-strip">
+          <p>Empezamos con 5 entidades</p>
+          <div className="entity-names">
+            {ENTIDADES.map((e) => (
+              <Link key={e.slug} href={'/entidades/' + e.slug}>
+                {e.nombreCorto}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <section className="section">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Empecemos por lo que necesitas</p>
+              <h2 style={{ marginTop: 14 }}>¿En qué te podemos ayudar?</h2>
+              <p>No necesitas conocer el nombre del trámite ni escribir como un abogado.</p>
+            </div>
+            <Link href="/guias" className="text-link">
+              Conoce tus opciones <Icon size={17} />
+            </Link>
+          </div>
+          <div className="cards">
+            {[
+              {
+                icon: 'document' as const,
+                title: 'Pedir información o copias',
+                text: 'Solicita un documento, una certificación o información que necesitas conocer.',
+                path: 'informacion',
+              },
+              {
+                icon: 'clock' as const,
+                title: 'Saber cómo va tu trámite',
+                text: 'Pregunta por el estado de una solicitud que ya presentaste ante una entidad.',
+                path: 'estado',
+              },
+              {
+                icon: 'people' as const,
+                title: 'Reportar un problema de atención',
+                text: 'Cuenta lo que pasó y pide una respuesta sobre la atención que recibiste.',
+                path: 'atencion',
+              },
+            ].map((c) => (
+              <article className="card" key={c.path}>
+                <div className="card-icon">
+                  <Icon name={c.icon} size={23} />
+                </div>
+                <h3>{c.title}</h3>
+                <p>{c.text}</p>
+                <Link className="text-link" href={'/crear?ruta=' + c.path}>
+                  Empezar <Icon size={17} />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+      <section className="steps-section">
+        <div className="container section">
+          <p className="eyebrow">Del “no sé por dónde empezar” al siguiente paso</p>
+          <div className="section-heading" style={{ marginTop: 14 }}>
+            <h2>Más claridad. Menos vueltas.</h2>
+          </div>
+          <div className="steps">
+            {[
+              [
+                '01',
+                'Cuéntanos qué pasó',
+                'Escribe como hablas. Te ayudamos a organizar lo importante.',
+              ],
+              [
+                '02',
+                'Prepara tu petición',
+                'Confirma la entidad y revisa un borrador que puedes editar.',
+              ],
+              [
+                '03',
+                'Envíala por el canal oficial',
+                'Te mostramos dónde radicarla y qué debes tener a mano.',
+              ],
+              [
+                '04',
+                'Lleva el seguimiento',
+                'Guarda el radicado y registra lo que sucede con tu solicitud.',
+              ],
+            ].map(([n, t, d]) => (
+              <div key={n}>
+                <div className="step-number">PASO {n}</div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-    </div>
+      <section className="container section community">
+        <div>
+          <p className="eyebrow">Hecho para la gente. Abierto a todos.</p>
+          <h2>
+            Un proyecto que crece
+            <br />
+            con la comunidad.
+          </h2>
+          <p>
+            El código y las guías son abiertos. Puedes ayudarnos a verificar una entidad, mejorar la
+            experiencia o hacer que esta herramienta llegue a más personas.
+          </p>
+          <Link href="/contribuir" className="text-link" style={{ marginTop: 18 }}>
+            Quiero contribuir <Icon size={18} />
+          </Link>
+        </div>
+        <div className="community-note">
+          <p>
+            La información de las entidades es pública.
+            <br />
+            Tu petición es privada.
+          </p>
+          <Link href="/privacidad" className="text-link" style={{ marginTop: 14 }}>
+            Cómo cuidamos tus datos <Icon name="shield" size={17} />
+          </Link>
+        </div>
+      </section>
+    </>
   );
 }

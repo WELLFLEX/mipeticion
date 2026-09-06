@@ -1,0 +1,28 @@
+name: Corregir una guía
+description: Propón una corrección respaldada por una fuente oficial.
+body:
+  - type: input
+    id: entity
+    attributes:
+      label: Entidad y ruta
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Enlace oficial
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Fecha de revisión
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Qué cambió y qué verificaste
+      description: HTTP 200 no demuestra que un canal funcione. No radiques una solicitud ficticia para probar.
+    validations:
+      required: true

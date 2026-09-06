@@ -1,0 +1,47 @@
+{
+  "source": "https://www.datos.gov.co/resource/h7zv-k39x.json",
+  "license": "CC-BY-SA-4.0",
+  "retrievedAt": "2026-09-06",
+  "rows": [
+    {
+      "dm_institucion_cod_institucion": "0347",
+      "nombre": "SERVICIO NACIONAL DE APRENDIZAJE",
+      "ccb_nit_inst": "899999034",
+      "orden": "NACIONAL",
+      "sector": "TRABAJO",
+      "ccb_pagina_web": "http://www.sena.edu.co"
+    },
+    {
+      "dm_institucion_cod_institucion": "0669",
+      "nombre": "INSTITUTO COLOMBIANO DE CREDITO EDUCATIVO Y ESTUDIOS TECNICOS EN EL EXTERIOR \"MARIANO OSPINA PEREZ\"",
+      "ccb_nit_inst": "899999035",
+      "orden": "NACIONAL",
+      "sector": "HACIENDA Y CRÉDITO PÚBLICO",
+      "ccb_pagina_web": "http://www.icetex.gov.co"
+    },
+    {
+      "dm_institucion_cod_institucion": "0870",
+      "nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DIRECCION DE IMPUESTOS Y ADUANAS NACIONALES",
+      "ccb_nit_inst": "800197268",
+      "orden": "NACIONAL",
+      "sector": "HACIENDA Y CRÉDITO PÚBLICO",
+      "ccb_pagina_web": "http://www.dian.gov.co"
+    },
+    {
+      "dm_institucion_cod_institucion": "8000",
+      "nombre": "ADMINISTRADORA COLOMBIANA DE PENSIONES",
+      "ccb_nit_inst": "900336004",
+      "orden": "NACIONAL",
+      "sector": "TRABAJO",
+      "ccb_pagina_web": "http://www.colpensiones.gov.co"
+    },
+    {
+      "dm_institucion_cod_institucion": "8030",
+      "nombre": "DEPARTAMENTO ADMINISTRATIVO PARA LA PROSPERIDAD SOCIAL",
+      "ccb_nit_inst": "9000395338",
+      "orden": "NACIONAL",
+      "sector": "INCLUSION SOCIAL Y RECONCILIACION",
+      "ccb_pagina_web": "http://www.prosperidadsocial.gov.co"
+    }
+  ]
+}

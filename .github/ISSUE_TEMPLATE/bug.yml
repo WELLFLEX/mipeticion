@@ -1,0 +1,23 @@
+name: Problema con el servicio
+description: Reporta un error con un ejemplo inventado, sin datos personales.
+body:
+  - type: markdown
+    attributes:
+      value: No publiques nombres, documentos, radicados, correos, capturas privadas ni credenciales. Para seguridad consulta SECURITY.md.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Qué hiciste y qué pasó
+      description: Incluye pasos reproducibles con datos sintéticos.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Qué esperabas
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Navegador y dispositivo
